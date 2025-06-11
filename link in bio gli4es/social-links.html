@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Links - gli4es</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            color: #ffffff;
+        }
+        
+        /* Starry background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+        
+        .star:nth-child(odd) {
+            animation-duration: 3s;
+        }
+        
+        .star:nth-child(3n) {
+            animation-duration: 1.5s;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        /* Back button */
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.75rem 1.5rem;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .back-button:hover {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            border-color: rgba(0, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+        }
+        
+        /* Profile section */
+        .profile-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #00ffff;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-avatar:hover {
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.6);
+            transform: scale(1.05);
+        }
+        
+        .profile-name {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #00ffff 0%, #ffffff 50%, #ff00ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .profile-subtitle {
+            font-size: 1rem;
+            color: #b0b0b0;
+            margin-bottom: 1rem;
+        }
+        
+        /* Social links section */
+        .social-links {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            text-decoration: none;
+            color: #ffffff;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.2rem 1.8rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            min-height: 70px;
+        }
+        
+        .social-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .social-button:hover::before {
+            left: 100%;
+        }
+        
+        .social-button:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Individual platform styling */
+        .telegram {
+            background: linear-gradient(135deg, rgba(0, 136, 204, 0.2) 0%, rgba(0, 136, 204, 0.05) 100%);
+            border-color: rgba(0, 136, 204, 0.3);
+        }
+        
+        .telegram:hover {
+            background: linear-gradient(135deg, rgba(0, 136, 204, 0.3) 0%, rgba(0, 136, 204, 0.1) 100%);
+            border-color: rgba(0, 136, 204, 0.5);
+            box-shadow: 0 15px 40px rgba(0, 136, 204, 0.2);
+        }
+        
+        .tiktok {
+            background: linear-gradient(135deg, rgba(255, 0, 80, 0.2) 0%, rgba(255, 0, 80, 0.05) 100%);
+            border-color: rgba(255, 0, 80, 0.3);
+        }
+        
+        .tiktok:hover {
+            background: linear-gradient(135deg, rgba(255, 0, 80, 0.3) 0%, rgba(255, 0, 80, 0.1) 100%);
+            border-color: rgba(255, 0, 80, 0.5);
+            box-shadow: 0 15px 40px rgba(255, 0, 80, 0.2);
+        }
+        
+        .steam {
+            background: linear-gradient(135deg, rgba(102, 192, 244, 0.2) 0%, rgba(102, 192, 244, 0.05) 100%);
+            border-color: rgba(102, 192, 244, 0.3);
+        }
+        
+        .steam:hover {
+            background: linear-gradient(135deg, rgba(102, 192, 244, 0.3) 0%, rgba(102, 192, 244, 0.1) 100%);
+            border-color: rgba(102, 192, 244, 0.5);
+            box-shadow: 0 15px 40px rgba(102, 192, 244, 0.2);
+        }
+        
+        /* Icon styling */
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .telegram .social-icon {
+            background: linear-gradient(135deg, #0088cc, #005999);
+            color: white;
+        }
+        
+        .tiktok .social-icon {
+            background: linear-gradient(135deg, #ff0050, #cc0040);
+            color: white;
+        }
+        
+        .steam .social-icon {
+            background: linear-gradient(135deg, #66c0f4, #4a90c2);
+            color: white;
+        }
+        
+        .social-button:hover .social-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        /* Text content */
+        .social-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            flex: 1;
+        }
+        
+        .social-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+        
+        .social-description {
+            font-size: 0.9rem;
+            color: #b0b0b0;
+            font-weight: 400;
+        }
+        
+        /* Arrow indicator */
+        .social-arrow {
+            font-size: 1.2rem;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+        }
+        
+        .social-button:hover .social-arrow {
+            opacity: 1;
+            transform: translateX(5px);
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: #666;
+            font-size: 0.85rem;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem 0.5rem;
+                max-width: 400px;
+            }
+            
+            .back-button {
+                top: 1rem;
+                left: 1rem;
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .profile-avatar {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .profile-name {
+                font-size: 1.8rem;
+            }
+            
+            .social-button {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+                min-height: 65px;
+            }
+            
+            .social-icon {
+                width: 35px;
+                height: 35px;
+                margin-right: 1rem;
+                font-size: 1.3rem;
+            }
+            
+            .social-name {
+                font-size: 1.1rem;
+            }
+            
+            .social-description {
+                font-size: 0.85rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .social-button {
+                padding: 0.9rem 1.2rem;
+                border-radius: 16px;
+            }
+            
+            .social-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 1.2rem;
+            }
+            
+            .social-name {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Fade in animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .fade-in-delay {
+            animation-delay: 0.2s;
+        }
+        
+        .fade-in-delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .fade-in-delay-3 {
+            animation-delay: 0.6s;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Pulse animation for profile avatar */
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(0, 255, 255, 0.6); }
+        }
+        
+        .profile-avatar {
+            animation: pulse 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <a href="#" class="back-button fade-in">← Назад</a>
+    
+    <div class="container">
+        <!-- Profile Section -->
+        <div class="profile-section fade-in">
+            <img src="images/avatar.jpg" alt="gli4es Avatar" class="profile-avatar">
+            <h1 class="profile-name">gli4es</h1>
+            <p class="profile-subtitle">Найди меня в социальных сетях</p>
+        </div>
+        
+        <!-- Social Links -->
+        <div class="social-links">
+            <a href="https://t.me/gli4es" class="social-button telegram fade-in fade-in-delay" target="_blank" rel="noopener">
+<div class="social-icon">
+  <img src="images/telegram.png" alt="Telegram" style="width: 100%; height: 100%; object-fit: contain;" />
+</div>
+
+                <div class="social-content">
+                    <div class="social-name">Telegram</div>
+                    <div class="social-description">Личные сообщения и новости</div>
+                </div>
+                <div class="social-arrow">→</div>
+            </a>
+            
+            <a href="https://tiktok.com/@gli4es" class="social-button tiktok fade-in fade-in-delay-2" target="_blank" rel="noopener">
+<div class="social-icon">
+  <img src="images/tiktok.png" alt="Telegram" style="width: 100%; height: 100%; object-fit: contain;" />
+</div>
+
+                <div class="social-content">
+                    <div class="social-name">TikTok</div>
+                    <div class="social-description">Короткие видео и моменты</div>
+                </div>
+                <div class="social-arrow">→</div>
+            </a>
+            
+            <a href="https://steamcommunity.com/profiles/76561199095627181/" class="social-button steam fade-in fade-in-delay-3" target="_blank" rel="noopener">
+<div class="social-icon">
+  <img src="images/steam.png" alt="Telegram" style="width: 100%; height: 100%; object-fit: contain;" />
+</div>
+
+                <div class="social-content">
+                    <div class="social-name">Steam</div>
+                    <div class="social-description">Игровой профиль и активность</div>
+                </div>
+                <div class="social-arrow">→</div>
+            </a>
+        </div>
+        
+        <div class="footer fade-in fade-in-delay-3">
+            <p>Подписывайся и следи за обновлениями! ✨</p>
+        </div>
+    </div>
+
+    <script>
+        // Generate random stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numberOfStars = 120;
+            
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random position
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                
+                // Random size
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                
+                // Random animation delay
+                star.style.animationDelay = Math.random() * 3 + 's';
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Add parallax effect to stars
+        function addParallaxEffect() {
+            document.addEventListener('mousemove', function(e) {
+                const stars = document.querySelectorAll('.star');
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                
+                stars.forEach((star, index) => {
+                    const speed = (index % 3 + 1) * 0.4;
+                    const xOffset = (x - 0.5) * speed;
+                    const yOffset = (y - 0.5) * speed;
+                    
+                    star.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+                });
+            });
+        }
+        
+        // Add click effects to social buttons
+        function addButtonEffects() {
+            const buttons = document.querySelectorAll('.social-button');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // Create ripple effect
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                        background: rgba(255, 255, 255, 0.2);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.6s ease-out;
+                        pointer-events: none;
+                        z-index: 1;
+                    `;
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        }
+        
+        // Add back button functionality
+        function addBackButtonEffect() {
+            const backButton = document.querySelector('.back-button');
+            
+            backButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Create ripple effect
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    background: rgba(0, 255, 255, 0.3);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 0.6s ease-out;
+                    pointer-events: none;
+                `;
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+                
+                // Navigate back
+                setTimeout(() => {
+                    window.history.back();
+                }, 300);
+            });
+        }
+        
+        // Add scroll animations
+        function addScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            // Observe elements for scroll animations
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+        
+        // Add ripple animation CSS
+        function addRippleAnimation() {
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(2);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Add floating animation to social buttons
+        function addFloatingAnimation() {
+            const buttons = document.querySelectorAll('.social-button');
+            
+            buttons.forEach((button, index) => {
+                // Add subtle floating animation with different delays
+                button.style.animation = `float 3s ease-in-out infinite`;
+                button.style.animationDelay = `${index * 0.5}s`;
+            });
+            
+            // Add floating keyframes
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes float {
+                    0%, 100% { transform: translateY(0px); }
+                    50% { transform: translateY(-3px); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            addParallaxEffect();
+            addButtonEffects();
+            addBackButtonEffect();
+            addScrollAnimations();
+            addRippleAnimation();
+            addFloatingAnimation();
+            
+            // Smooth page entrance
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease-in';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+        
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                window.history.back();
+            }
+        });
+    </script>
+</body>
+</html>
